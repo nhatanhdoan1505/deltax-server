@@ -1,3 +1,4 @@
+import { Tcp } from "./../tcp/tcp.service";
 import { Server, Socket } from "socket.io";
 import { WebsocketEvent } from "../../types/event";
 import { io, Socket as SocketClient } from "socket.io-client";
@@ -7,6 +8,7 @@ export class WebsocketHelper {
   private socket: Socket;
   private socketClient: SocketClient;
   private urlRobotApp = "http://localhost:5001";
+  private tcp = Tcp.getInstance();
 
   constructor({ io, socket }: { io: Server; socket: Socket }) {
     this.io = io;
@@ -28,6 +30,7 @@ export class WebsocketHelper {
     console.log(data);
     this.io.emit(WebsocketEvent.MOVE, data);
     this.socketClient.emit(WebsocketEvent.MOVE, data);
+    this.tcp.emitApplication(data);
   }
 
   helperEventFactory(event: WebsocketEvent) {

@@ -1,5 +1,4 @@
-import { App } from "./module";
-import { Websocket } from "./module";
+import { App, Websocket, Tcp } from "./module";
 
 const bootstrap = async () => {
   const app = App.getInstance();
@@ -9,6 +8,9 @@ const bootstrap = async () => {
   const websocket = Websocket.getInstance();
   websocket.createWebsocket(server);
   websocket.listen();
+
+  const tcp = Tcp.getInstance();
+  tcp.connectApplication();
 };
 
 bootstrap();
